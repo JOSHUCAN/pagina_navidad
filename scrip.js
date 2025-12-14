@@ -1,81 +1,56 @@
-/* ======================
-   CUENTA REGRESIVA
-====================== */
-const navidad = new Date("December 25, 2025 00:00:00").getTime();
+// CUENTA REGRESIVA
+const fechaNavidad = new Date("December 25, 2025 00:00:00").getTime();
 
 setInterval(() => {
     const ahora = new Date().getTime();
-    const distancia = navidad - ahora;
+    const t = fechaNavidad - ahora;
 
-    const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-    const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-    const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-
-    document.getElementById("dias").innerHTML = dias;
-    document.getElementById("horas").innerHTML = horas;
-    document.getElementById("minutos").innerHTML = minutos;
-    document.getElementById("segundos").innerHTML = segundos;
+    document.getElementById("dias").textContent =
+        Math.floor(t / (1000 * 60 * 60 * 24));
+    document.getElementById("horas").textContent =
+        Math.floor((t / (1000 * 60 * 60)) % 24);
+    document.getElementById("minutos").textContent =
+        Math.floor((t / (1000 * 60)) % 60);
+    document.getElementById("segundos").textContent =
+        Math.floor((t / 1000) % 60);
 }, 1000);
 
-/* ======================
-   ANIMACIÓN DE NIEVE
-====================== */
+// NIEVE
 const canvas = document.getElementById("nieve");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let copos = [];
-
-for (let i = 0; i < 150; i++) {
-    copos.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 4 + 1,
-        d: Math.random() + 1
-    });
+function resize() {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
 }
+resize();
+addEventListener("resize", resize);
 
-function dibujarNieve() {
+let copos = Array.from({ length: 220 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 3 + 1,
+    s: Math.random() + 0.5
+}));
+
+function animarNieve() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "white";
-    ctx.beginPath();
 
-    for (let i = 0; i < copos.length; i++) {
-        const c = copos[i];
-        ctx.moveTo(c.x, c.y);
+    copos.forEach(c => {
+        ctx.beginPath();
         ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-    }
+        ctx.fill();
 
-    ctx.fill();
-    moverNieve();
-}
-
-let angulo = 0;
-
-function moverNieve() {
-    angulo += 0.01;
-    for (let i = 0; i < copos.length; i++) {
-        const c = copos[i];
-        c.y += Math.pow(c.d, 2) + 1;
-        c.x += Math.sin(angulo) * 2;
-
+        c.y += c.s;
         if (c.y > canvas.height) {
-            copos[i] = {
-                x: Math.random() * canvas.width,
-                y: 0,
-                r: c.r,
-                d: c.d
-            };
+            c.y = -5;
+            c.x = Math.random() * canvas.width;
         }
-    }
+    });
+
+    requestAnimationFrame(animarNieve);
 }
 
-setInterval(dibujarNieve, 30);
+animarNieve();
 
-window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
