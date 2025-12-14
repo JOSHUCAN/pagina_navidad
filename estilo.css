@@ -1,108 +1,108 @@
-* {
+/* css/noche-paz.css */
+
+/* Importar tipografía elegante */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
+
+/* Fondo navideño en rojos */
+body {
+    background: linear-gradient(180deg, #2b0a0a, #5a0f0f, #2b0a0a);
+    color: #fff1e6; /* blanco cálido */
+    font-family: 'Playfair Display', serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body {
+    text-align: center;
     min-height: 100vh;
-    background: linear-gradient(180deg, #001f3f, #0a3d62, #001f3f);
-    font-family: 'Segoe UI', sans-serif;
-    color: white;
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-/* Nieve */
-#nieve {
+/* Copos de nieve */
+.snowflake {
     position: fixed;
-    inset: 0;
-    z-index: 0;
-}
-
-/* HERO */
-.hero {
-    position: relative;
-    z-index: 2;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.hero h1 {
-    font-size: 4rem;
-    text-shadow: 0 0 20px rgba(255,255,255,0.7);
-}
-
-.hero p {
-    font-size: 1.3rem;
-    margin: 15px 0 40px;
+    top: -10px;
+    color: #ffffff;
+    z-index: 1000;
+    user-select: none;
+    pointer-events: none;
+    animation: fall linear infinite, sway ease-in-out infinite;
     opacity: 0.9;
 }
 
-/* CONTADOR */
-.contador {
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
+/* Animaciones */
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
 }
 
-.card {
-    width: 110px;
-    height: 120px;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(6px);
-    border-radius: 18px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+@keyframes sway {
+    0% { margin-left: 0; }
+    50% { margin-left: 18px; }
+    100% { margin-left: 0; }
 }
 
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 25px rgba(255,255,255,0.4);
+/* Encabezado */
+header {
+    background-color: rgba(90, 15, 15, 0.85);
+    padding: 25px 0;
+    border-bottom: 2px solid #f1c40f; /* dorado */
 }
 
-.card span {
-    font-size: 2.4rem;
-    font-weight: bold;
+header h1 {
+    font-size: 3.2em;
+    color: #f9d423; /* dorado suave */
+    letter-spacing: 6px;
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
 
-.card small {
-    letter-spacing: 2px;
-    opacity: 0.8;
+header p {
+    font-style: italic;
+    color: #f5c6c6;
 }
 
-/* ÁRBOL */
-.decoracion {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    margin-top: -120px;
-}
-
+/* Árbol */
 .arbol {
-    width: 260px;
-    animation: balanceo 4s ease-in-out infinite;
-    filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));
+    font-size: 85px;
+    margin: 35px auto;
+    animation: sparkle 1.5s ease-in-out infinite;
 }
 
-@keyframes balanceo {
-    0%, 100% { transform: rotate(-2deg); }
-    50% { transform: rotate(2deg); }
+@keyframes sparkle {
+    0%   { opacity: 0.85; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.03); }
 }
 
-/* FOOTER */
+/* Tarjeta */
+.tarjeta {
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 18px;
+    padding: 35px;
+    margin: 40px auto;
+    max-width: 620px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+.tarjeta h2 {
+    color: #ffb3b3;
+    border-bottom: 1px dashed #f9e0e0;
+    padding-bottom: 12px;
+}
+
+.tarjeta p {
+    line-height: 1.7;
+}
+
+/* Footer */
 footer {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 25px;
-    font-size: 1.1rem;
-    opacity: 0.9;
+    background-color: rgba(90, 15, 15, 0.85);
+    color: #f5c6c6;
+    padding: 15px 0;
+    width: 100%;
+    font-size: 0.95em;
+    margin-top: auto;
 }
+
 
