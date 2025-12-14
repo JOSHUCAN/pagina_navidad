@@ -1,56 +1,39 @@
-// CUENTA REGRESIVA
-const fechaNavidad = new Date("December 25, 2025 00:00:00").getTime();
+function crearAnimacion() {
+    const copo = document.createElement('div');
+    copo.classList.add('snowflake');
 
-setInterval(() => {
-    const ahora = new Date().getTime();
-    const t = fechaNavidad - ahora;
+    // Diferentes tipos de copos
+    const copos = ['❄', '✦', '✧'];
+    copo.textContent = copos[Math.floor(Math.random() * copos.length)];
 
-    document.getElementById("dias").textContent =
-        Math.floor(t / (1000 * 60 * 60 * 24));
-    document.getElementById("horas").textContent =
-        Math.floor((t / (1000 * 60 * 60)) % 24);
-    document.getElementById("minutos").textContent =
-        Math.floor((t / (1000 * 60)) % 60);
-    document.getElementById("segundos").textContent =
-        Math.floor((t / 1000) % 60);
-}, 1000);
+    // Posición horizontal aleatoria
+    copo.style.left = Math.random() * window.innerWidth + 'px';
 
-// NIEVE
-const canvas = document.getElementById("nieve");
-const ctx = canvas.getContext("2d");
+    // Tamaño aleatorio
+    const size = Math.random() * 18 + 12;
+    copo.style.fontSize = size + 'px';
 
-function resize() {
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-}
-resize();
-addEventListener("resize", resize);
+    // Opacidad aleatoria
+    copo.style.opacity = Math.random() * 0.5 + 0.5;
 
-let copos = Array.from({ length: 220 }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 3 + 1,
-    s: Math.random() + 0.5
-}));
+    // Duración aleatoria de la caída
+    const duration = Math.random() * 6 + 6;
+    copo.style.animationDuration = duration + 's';
 
-function animarNieve() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "white";
+    // Pequeño retraso para variar la caída
+    copo.style.animationDelay = Math.random() * 2 + 's';
 
-    copos.forEach(c => {
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-        ctx.fill();
+    // Añadir al body
+    document.body.appendChild(copo);
 
-        c.y += c.s;
-        if (c.y > canvas.height) {
-            c.y = -5;
-            c.x = Math.random() * canvas.width;
-        }
-    });
-
-    requestAnimationFrame(animarNieve);
+    // Remover después de la animación
+    setTimeout(() => copo.remove(), (duration + 2) * 1000);
 }
 
-animarNieve();
+// Ejecutar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+    setInterval(crearAnimacion, 250);
+});
+
+
 
